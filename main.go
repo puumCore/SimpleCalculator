@@ -18,7 +18,7 @@ func main() {
 	fmt.Println("Enter the second number: ")
 	fmt.Scan(&y)
 
-	cal := Draft{
+	cal := Draft[float64, float64]{
 		x, y, sign,
 	}
 
@@ -31,12 +31,17 @@ func main() {
 
 }
 
-type Draft struct {
-	firstNumb, secondNumb float64
-	operator              string
+type Draft[F Number, S Number] struct {
+	firstNumb  F
+	secondNumb S
+	operator   string
 }
 
-func calculate(d Draft) (float64, error) {
+type Number interface {
+	int | int64 | float32 | float64 | complex64 | complex128
+}
+
+func calculate(d Draft[float64, float64]) (float64, error) {
 	switch d.operator {
 	case "+":
 		return d.firstNumb + d.secondNumb, nil
